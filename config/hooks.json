@@ -6,10 +6,7 @@
         "trigger-rule": {
             "match": {
                 "type": "value",
-                "value": {
-                    "source": "env",
-                    "name": "WEBHOOK_API_TOKEN"
-                },
+                "value": "{{ getenv \"WEBHOOK_API_TOKEN\" }}",
                 "parameter": {
                     "source": "header",
                     "value": "X-api-key"
@@ -30,10 +27,7 @@
         "trigger-rule": {
             "match": {
                 "type": "value",
-                "value": {
-                    "source": "env",
-                    "name": "WEBHOOK_API_TOKEN"
-                },
+                "value": "{{ getenv \"WEBHOOK_API_TOKEN\" }}",
                 "parameter": {
                     "source": "header",
                     "value": "X-api-key"
@@ -59,10 +53,7 @@
         "trigger-rule": {
             "match": {
                 "type": "value",
-                "value": {
-                    "source": "env",
-                    "name": "WEBHOOK_API_TOKEN"
-                },
+                "value": "{{ getenv \"WEBHOOK_API_TOKEN\" }}",
                 "parameter": {
                     "source": "header",
                     "value": "X-api-key"
