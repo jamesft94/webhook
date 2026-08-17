@@ -1,0 +1,71 @@
+[
+    {
+        "id": "metrics",
+        "execute-command": "/opt/webhook/scripts/metrics.sh",
+        "command-working-directory": "/opt/webhook/data",
+        "trigger-rule": {
+            "match": {
+                "type": "value",
+                "value": "SUPER_SECRET_KEY",
+                "parameter": {
+                    "source": "header",
+                    "value": "X-api-key"
+                }
+            }
+        },
+        "pass-arguments-to-command": [
+            {
+                "source": "entire-payload"
+            }
+        ],
+        "include-command-output-in-response": true
+    },
+    {
+        "id": "whoami",
+        "execute-command": "/opt/webhook/scripts/whoami.sh",
+        "command-working-directory": "/opt/webhook/data",
+        "trigger-rule": {
+            "match": {
+                "type": "value",
+                "value": "SUPER_SECRET_KEY",
+                "parameter": {
+                    "source": "header",
+                    "value": "X-api-key"
+                }
+            }
+        },
+        "pass-arguments-to-command": [
+            {
+                "source": "request",
+                "name": "remote-addr"
+            },
+            {
+                "source": "payload",
+                "name": "expected_ip"
+            }
+        ],
+        "include-command-output-in-response": true
+    },
+    {
+        "id": "scan",
+        "execute-command": "/opt/webhook/scripts/scan.sh",
+        "command-working-directory": "/opt/webhook/data",
+        "trigger-rule": {
+            "match": {
+                "type": "value",
+                "value": "SUPER_SECRET_KEY",
+                "parameter": {
+                    "source": "header",
+                    "value": "X-api-key"
+                }
+            }
+        },
+        "pass-arguments-to-command": [
+            {
+                "source": "entire-payload",
+                "name": "vm_ip"
+            }
+        ],
+        "include-command-output-in-response": true
+    }
+]
