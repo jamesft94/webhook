@@ -6,16 +6,16 @@ After=network.target
 Type=simple
 User=webhook
 Group=webhook
-WorkingDirectory=/opt/webhook
-EnvironmentFile=/opt/webhook/.env
-ExecStart=/usr/bin/webhook -hooks /opt/webhook/config/hooks.json -port 9000 -verbose -hotreload
+WorkingDirectory=/home/mehri/webhook
+EnvironmentFile=/home/mehri/webhook/.env
+ExecStart=/usr/bin/webhook -hooks /home/mehri/webhook/config/hooks.json -port 9000 -verbose -hotreload
 Restart=on-failure
 RestartSec=5s
 
-# Restrict writes strictly to /opt/webhook
+# Restrict writes strictly to /home/mehri/webhook
 ProtectSystem=full
 ProtectHome=true
-ReadWritePaths=/opt/webhook/data
+ReadWritePaths=/home/mehri/webhook/data
 
 StandardOutput=journal
 StandardError=journal
