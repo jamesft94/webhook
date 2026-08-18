@@ -67,5 +67,22 @@
             }
         ],
         "include-command-output-in-response": true
+    },
+
+    {
+        "id": "roast",
+        "execute-command": "/opt/webhook/scripts/roast.sh",
+        "command-working-directory": "/opt/webhook/data",
+        "trigger-rule": {
+            "match": {
+                "type": "value",
+                "value": "{{ getenv `WEBHOOK_API_TOKEN` }}",
+                "parameter": {
+                    "source": "header",
+                    "name": "X-api-key"
+                }
+            }
+        },
+        "include-command-output-in-response": true
     }
 ]
