@@ -61,3 +61,4 @@ cat <<EOF
   "target": "$TARGET",
   "endpoint": "/roast"
 }
+EOF
