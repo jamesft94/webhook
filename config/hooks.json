@@ -83,6 +83,16 @@
                 }
             }
         },
+        "pass-arguments-to-command": [
+            {
+                "source": "payload",
+                "name": "target"
+            },
+            {
+                "source": "request",
+                "name": "remote-addr"
+            }
+        ],
         "include-command-output-in-response": true
     }
 ]

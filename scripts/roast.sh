@@ -3,6 +3,7 @@
 set -euo pipefail
 
 TARGET="${1:-"localhost"}"
+REMOTE_ADDR="${2:-"unknown"}"
 
 ROASTS=(
   "You have something on your chin... no, the third one down."
@@ -53,12 +54,42 @@ RANDOM_INDEX=$(( RANDOM % ${#ROASTS[@]} ))
 ROAST="${ROASTS[$RANDOM_INDEX]}"
 TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
+LOG_FILE="roast_log.json"
+LOCK_FILE="roast_log.lock"
+MAX_ENTRIES=100
+
+if [ ! -s "$LOG_FILE" ]; then
+  echo '{"count": 0, "entries": []}' > "$LOG_FILE"
+fi
+
+{
+  flock -x 200
+
+  NEW_ENTRY=$(jq -n \
+    --arg ts "$TIMESTAMP" \
+    --arg target "$TARGET" \
+    --arg roast "$ROAST" \
+    --arg ip "$REMOTE_ADDR" \
+    '{timestamp: $ts, target: $target, roast: $roast, remote_addr: $ip}')
+
+    jq --argjson entry "$NEW_ENTRY" --argjson max "$MAX_ENTRIES" '
+    .count += 1
+    | .entries += [$entry]
+    | .entries |= (if length > $max then .[-$max:] else . end)
+    ' "$LOG_FILE" > "${LOG_FILE}.tmp"
+    
+    mv "${LOG_FILE}.tmp" "$LOG_FILE"
+} 200>"$LOCK_FILE"
+
+TRIGGER_COUNT=$(jq '.count' "$LOG_FILE")
+
 cat <<EOF
 {
   "timestamp": "$TIMESTAMP",
   "STATUS": "OK",
   "roast": "$ROAST",
   "target": "$TARGET",
-  "endpoint": "/roast"
+  "endpoint": "/roast",
+  "trigger_count": $TRIGGER_COUNT
 }
 EOF
