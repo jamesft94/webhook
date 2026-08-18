@@ -15,4 +15,4 @@ else
   MATCH="false"
 fi
 
-echo "{\"timestamp\":\"$TIMESTAMP\",\"source_ip\":\"$CLIENT_IP\",\"remote_ip\":\"$EXPECTED_IP\",\"ip_matched\":$MATCH}"
+echo "{\"timestamp\":\"$TIMESTAMP\",\"source_ip\":\"$CLIENT_IP\",\"remote_ip\":\"$EXPECTED_IP\",\"ip_matched\":$MATCH}" > whoami_log.json
