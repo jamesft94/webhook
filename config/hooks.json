@@ -47,8 +47,8 @@
         "include-command-output-in-response": true
     },
     {
-        "id": "scan",
-        "execute-command": "/opt/webhook/scripts/scan.sh",
+        "id": "8ball",
+        "execute-command": "/opt/webhook/scripts/8ball.sh",
         "command-working-directory": "/opt/webhook/data",
         "trigger-rule": {
             "match": {
@@ -62,8 +62,8 @@
         },
         "pass-arguments-to-command": [
             {
-                "source": "entire-payload",
-                "name": "vm_ip"
+                "source": "payload",
+                "name": "question"
             }
         ],
         "include-command-output-in-response": true
